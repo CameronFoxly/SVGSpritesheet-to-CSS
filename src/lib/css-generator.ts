@@ -131,7 +131,7 @@ export function generatePreviewStyle(
     animationTimingFunction: timingFunction,
     animationIterationCount: iterationCount,
     animationPlayState: playState,
-    animationFillMode: 'forwards',
+    animationFillMode: 'none',
   } as React.CSSProperties & Record<string, string>;
 }
 
