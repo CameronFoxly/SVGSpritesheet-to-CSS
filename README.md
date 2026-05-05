@@ -1,5 +1,7 @@
 # SVG Spritesheet → CSS
 
+![Screenshot of SVG Spritesheet to CSS](public/screenshot.png)
+
 A web-based tool that converts SVG spritesheets into ready-to-use CSS animations. Upload a spritesheet, configure your animation parameters, preview the result in real time, and copy the generated CSS.
 
 ## Features
