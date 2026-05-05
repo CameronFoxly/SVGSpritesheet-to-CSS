@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
 import type { SpriteConfig } from '@/lib/css-generator';
 import { generatePreviewKeyframes, generatePreviewStyle } from '@/lib/css-generator';
 
@@ -14,6 +15,7 @@ interface AnimationPreviewProps {
 export function AnimationPreview({ config, imageUrl }: AnimationPreviewProps) {
   const [playMode, setPlayMode] = useState<PlayMode>('loop');
   const [animKey, setAnimKey] = useState(0);
+  const [zoom, setZoom] = useState(1);
   const styleRef = useRef<HTMLStyleElement | null>(null);
 
   const keyframesCSS = useMemo(
@@ -67,12 +69,39 @@ export function AnimationPreview({ config, imageUrl }: AnimationPreviewProps) {
         {/* Preview Area */}
         <div className="flex items-center justify-center min-h-[200px] bg-[repeating-conic-gradient(#e5e5e5_0%_25%,transparent_0%_50%)] bg-[length:16px_16px] rounded-lg border p-4 overflow-auto">
           {imageUrl && previewStyle ? (
-            <div key={animKey} style={previewStyle} />
+            <div
+              key={animKey}
+              style={{
+                ...previewStyle,
+                transform: `scale(${zoom})`,
+                transformOrigin: 'center',
+              }}
+            />
           ) : (
             <p className="text-sm text-muted-foreground">
               Import an SVG spritesheet to preview
             </p>
           )}
+        </div>
+
+        {/* Zoom Controls */}
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-muted-foreground shrink-0 w-12">{zoom.toFixed(1)}x</span>
+          <Slider
+            min={0.5}
+            max={10}
+            step={0.5}
+            value={[zoom]}
+            onValueChange={(val) => setZoom(Array.isArray(val) ? val[0] : val)}
+          />
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setZoom(1)}
+            disabled={zoom === 1}
+          >
+            Reset
+          </Button>
         </div>
 
         {/* Transport Controls */}

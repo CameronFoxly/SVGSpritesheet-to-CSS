@@ -1,73 +1,75 @@
-# React + TypeScript + Vite
+# SVG Spritesheet → CSS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Screenshot of SVG Spritesheet to CSS](public/screenshot.png)
 
-Currently, two official plugins are available:
+A web-based tool that converts SVG spritesheets into ready-to-use CSS animations. Upload a spritesheet, configure your animation parameters, preview the result in real time, and copy the generated CSS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Spritesheet upload** — drag-and-drop or browse for an SVG spritesheet image
+- **Frame configuration** — set frame count, width, height, and FPS
+- **Hold frames** — pause on specific frames for a custom duration (great for character idles, blinks, etc.)
+- **Live preview** — watch the animation play back in loop, once, or paused mode
+- **CSS output** — generates clean `@keyframes` and `.sprite` CSS you can copy straight into your project
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## How it works
 
-## Expanding the ESLint configuration
+The tool treats a vertical spritesheet as a sequence of equally sized frames stacked top to bottom. It calculates `background-position` offsets and generates a CSS `steps()` animation that scrubs through them at the configured FPS.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+When hold frames are added, the generator switches from a simple `steps(n)` animation to per-frame `@keyframes` percentages, stretching the timeline so the held frame stays visible for the specified extra duration.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+# Clone the repository
+git clone https://github.com/CameronFoxly/SVGSpritesheet-to-CSS.git
+cd SVGSpritesheet-to-CSS
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Install dependencies
+npm install
+
+# Start the dev server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Other available scripts:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Command             | Description                        |
+| ------------------- | ---------------------------------- |
+| `npm run dev`       | Start Vite dev server with HMR     |
+| `npm run build`     | Type-check and build for production |
+| `npm run preview`   | Preview the production build       |
+| `npm run lint`      | Run ESLint                         |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Tech stack
+
+- [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/)
+- [Tailwind CSS v4](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/) (Base UI)
+- Deployed to [GitHub Pages](https://pages.github.com/) via GitHub Actions
+
+## Contributing
+
+Contributions are welcome! Here's how to get involved:
+
+1. **Fork** the repository and create a feature branch from `main`.
+2. **Install dependencies** with `npm install`.
+3. **Make your changes** — keep commits focused and descriptive.
+4. **Lint and build** before pushing:
+   ```bash
+   npm run lint
+   npm run build
+   ```
+5. **Open a pull request** against `main` with a clear description of what you changed and why.
+
+### Guidelines
+
+- Follow the existing code style (TypeScript, functional React components).
+- Keep PRs small and focused on a single change when possible.
+- If you're adding a new feature, consider updating this README to document it.
+- Bug reports and feature requests are welcome as [GitHub Issues](https://github.com/CameronFoxly/SVGSpritesheet-to-CSS/issues).
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
