@@ -70,4 +70,4 @@ Contributions are welcome! Here's how to get involved:
 
 ## License
 
-This project does not currently include a license. If you'd like to use or redistribute it, please open an issue to discuss licensing.
+This project is licensed under the [MIT License](LICENSE).
